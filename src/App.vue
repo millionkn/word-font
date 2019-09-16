@@ -4,7 +4,10 @@
   </div>
 </template>
 <style>
-body {
+body,#app {
   margin: 0;
+  display: flex;
+  align-items:stretch;
+  flex:1;
 }
 </style>
