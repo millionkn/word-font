@@ -11,6 +11,12 @@ export default new Router({
     {
       path: '/',
       component: PageContainer,
+      children: [
+        {
+          path: "login",
+          component: () => import("@/views/Login.vue")
+        },
+      ]
     },
   ]
 })
