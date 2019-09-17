@@ -4,14 +4,23 @@
       <span class="span" />
       <show-me></show-me>
     </el-header>
-    <el-main>
-      <router-view />
+    <el-main class="container">
+      <div class="page">
+        <router-view />
+      </div>
     </el-main>
   </el-container>
 </template>
 <style lang="less" scoped>
-.el-header {
+.el-header,
+.container {
   display: flex;
+}
+.container {
+  justify-content: center;
+}
+.page {
+  width: 800px;
 }
 .span {
   flex: 1;
