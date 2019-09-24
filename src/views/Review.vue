@@ -1,7 +1,7 @@
 <template>
   <div ref="customn_target" style="display:flex;border:4px">
     <keep-alive>
-      <component :is="currentComponent" :word="currentWord" @result="getResult"></component>
+      <component :is="currentComponent" :word="currentWord.data" @result="getResult"></component>
     </keep-alive>
   </div>
 </template>
@@ -15,7 +15,7 @@ import { Loading } from "element-ui";
 type vueOption = typeof Vue.extend extends (opt: infer O) => any ? O : false;
 type vueConstroctor = ReturnType<typeof Vue.extend>;
 type vueInstance = InstanceType<vueConstroctor>;
-function random<T>(arr: T[]) {
+function random<T>(arr: T[], except?: T) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 export default Vue.extend({
@@ -26,12 +26,18 @@ export default Vue.extend({
       [key: string]: vueConstroctor;
     };
     let words = {} as {
-      [id: string]: word["data"];
+      [id: string]: word;
     };
     let currentComponent = ref(Vue.extend({ render: h => h("div") }));
-    let currentWord = ref({} as word["data"]);
+    let currentWord = ref({} as word);
     let switchWord = () => {
-      let wordInfo = random(lesson.data);
+      let wordInfo = random(
+        lesson.data.filter(
+          lesson.data.length < 2
+            ? () => true
+            : word => word.wordId != currentWord.value.id
+        )
+      );
       let componentId = random(wordInfo.component) || "default";
       currentWord.value = words[wordInfo.wordId];
       currentComponent.value = components[componentId];
@@ -42,7 +48,7 @@ export default Vue.extend({
           new Set(
             lesson.data.map(async x => {
               let word = (await Axios.get(`/word/${x.wordId}`)).data as word;
-              words[word.id] = word.data;
+              words[word.id] = word;
             })
           )
         ),
