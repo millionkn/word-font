@@ -21,36 +21,41 @@
   </el-container>
 </template>
 <style lang="less" scoped>
-.center{
-  height:100%;
+.center {
+  height: 100%;
 }
-.el-main{
+.el-main {
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 <script lang="ts">
 import Vue from "vue";
-import { reactive } from "@vue/composition-api";
+import { reactive, ref } from "@vue/composition-api";
 import store from "@/store";
 import router from "@/router";
-import { MessageBox,Message } from 'element-ui';
+import { MessageBox, Message } from "element-ui";
 export default Vue.extend({
-  setup(initProps,setupContext) {
+  props: ["currentPath"],
+  setup(initProps, setupContext) {
     let form = reactive({
       username: "",
-      password: "",
+      password: ""
     });
     return {
       form,
       submit: async () => {
-        try{
-          let user = await store.dispatch("login",form);
+        try {
+          let user = await store.dispatch("login", form);
           Message.success(`欢迎您，${user.username}`);
-          await router.replace("/");
-        }catch(e){
-          MessageBox.alert(e,"错误");
+          try {
+            await router.replace((initProps.currentPath as string) || "/");
+          } catch (e) {
+            //似乎被打断的路由也会被当做错误处理
+          }
+        } catch (e) {
+          MessageBox.alert(e, "错误");
         }
       }
     };

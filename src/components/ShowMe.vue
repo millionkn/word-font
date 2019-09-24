@@ -22,12 +22,14 @@
 import Vue from "vue";
 import store from "@/store";
 import { computed } from "@vue/composition-api";
+import router from "../router";
 export default Vue.extend({
   setup() {
     return {
       currentUser: computed(() => store.state.currentUser),
       logout: async () => {
         await store.dispatch("logout");
+        await router.replace("/");
       }
     };
   }

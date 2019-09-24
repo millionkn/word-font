@@ -2,6 +2,7 @@
   <el-container>
     <el-header>
       <span class="span" />
+      <tool-bar></tool-bar>
       <show-me></show-me>
     </el-header>
     <el-main class="container">
@@ -29,8 +30,10 @@
 <script lang="ts">
 import Vue from "vue";
 import ShowMe from "@/components/ShowMe.vue";
+import ToolBar from "@/components/ToolBar.vue";
 export default Vue.extend({
   components: {
+    ToolBar,
     ShowMe
   }
 });

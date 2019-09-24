@@ -1,54 +1,53 @@
 import Vue from 'vue'
 import Vuex, { Store, StoreOptions } from 'vuex'
-import axios from "axios";
-
+import _axios from "axios";
+import * as types from "@/types";
+import interceptors from "@/interceptors";
 Vue.use(Vuex)
-
-let state = {
-  currentUser: undefined as {
-    username: string
-  } | undefined
-}
+let axios = _axios.create();
+// axios.interceptors.response.eject(interceptors.needLogin);
 let opt = (<S, K>(opt: StoreOptions<S> & K): K => opt)({
-  state,
-  getters: {
-    currentUser: (cont) => cont.currentUser,
+  state: {
+    currentUser: undefined as types.currentUser | undefined
   },
   mutations: {
-    setCurrentUser(cont, user: typeof state.currentUser) {
+    setCurrentUser(cont, user: types.currentUser | undefined) {
       cont.currentUser = user;
-    }
+    },
   },
   actions: {
+    async reloadCurrentUser(cont) {
+      try {
+        await axios.head("/currentUser")
+        if (!store.state.currentUser) {
+          store.commit("setCurrentUser", (await axios.get("currentUser")).data)
+        }
+      } catch{
+        if (store.state.currentUser) {
+          store.commit("setCurrentUser", undefined);
+        }
+      }
+    },
     async login(cont, form: {
       username: string,
       password: string,
     }) {
       let data = (await axios.post("/login", form)).data;
       if (data.err) { throw data.err }
-      cont.commit("setCurrentUser", (await axios.get("/currentUser")).data)
-      let user = cont.state.currentUser
+      await store.dispatch("reloadCurrentUser");
+      let user = cont.state.currentUser;
       return <Exclude<typeof user, undefined>>user;
     },
     async logout(cont) {
-      await axios.post("/logout").finally(() => {
-        cont.commit("setCurrentUser", undefined);
-      })
+      await axios.post("/logout").catch().finally(async () => {
+        await store.dispatch("reloadCurrentUser");
+      });
     }
   }
 })
 let _store = new Vuex.Store(opt);
 let store = <{
-  dispatch: <K extends keyof typeof opt.actions>(name: K, ...option: typeof opt.actions[typeof name] extends (a: any, ...b: infer X) => any ? X : never) => (ReturnType<typeof opt.actions[typeof name]> extends Promise<number> ? ReturnType<typeof opt.actions[typeof name]> : Promise<ReturnType<typeof opt.actions[typeof name]>>),
+  dispatch: <K extends keyof typeof opt.actions>(name: K, ...option: typeof opt.actions[typeof name] extends (a: any, ...b: infer X) => any ? X : never) => (ReturnType<typeof opt.actions[typeof name]> extends Promise<any> ? ReturnType<typeof opt.actions[typeof name]> : Promise<ReturnType<typeof opt.actions[typeof name]>>),
   commit: <K extends keyof typeof opt.mutations>(name: K, ...option: typeof opt.mutations[typeof name] extends (a: any, ...b: infer X) => any ? X : never) => (ReturnType<typeof opt.mutations[typeof name]>)
 } & (Omit<typeof _store, "dispatch" | "commit">)>_store;
-(async () => {
-  try {
-    let res = await axios.get("/currentUser");
-    store.commit("setCurrentUser", res.data);
-  } catch{
-
-  }
-
-})()
 export default store
