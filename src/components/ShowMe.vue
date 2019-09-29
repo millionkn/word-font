@@ -12,7 +12,7 @@
     </div>
   </div>
 </template>
-<style lang="less">
+<style lang="less" scoped>
 .root {
   display: flex;
   align-items: center;
