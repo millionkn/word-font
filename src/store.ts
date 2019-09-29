@@ -20,7 +20,7 @@ let opt = (<S, K>(opt: StoreOptions<S> & K): K => opt)({
       try {
         await axios.head("/currentUser")
         if (!store.state.currentUser) {
-          store.commit("setCurrentUser", (await axios.get("currentUser")).data)
+          store.commit("setCurrentUser", (await axios.get("/currentUser")).data)
         }
       } catch{
         if (store.state.currentUser) {
