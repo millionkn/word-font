@@ -1,16 +1,13 @@
 <template>
   <div class="root">
-    <div class="block" @click="onClick('/review')">
-      <el-card>复习</el-card>
+    <div class="block" @click="onClick('/myLesson')">
+      <el-card>课程</el-card>
     </div>
     <div class="block">
-      <el-card>课程管理</el-card>
+      <el-card>插件</el-card>
     </div>
     <div class="block">
-      <el-card>插件管理</el-card>
-    </div>
-    <div class="block">
-      <el-card>历史统计</el-card>
+      <el-card>统计</el-card>
     </div>
   </div>
 </template>

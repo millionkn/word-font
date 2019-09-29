@@ -71,8 +71,8 @@ export default new Router({
                 component: () => import("@/views/Home.vue"),
                 children: [
                   {
-                    path: "review",
-                    component: () => import("@/views/ReviewList.vue"),
+                    path: "myLesson",
+                    component: () => import("@/views/MyLessonList.vue"),
                     beforeEnter: async (to, from, next) => {
                       data = (await axios.get(`/currentUser/lessonList`)).data;
                       next();
