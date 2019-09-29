@@ -69,13 +69,27 @@ export default new Router({
                 path: "/",
                 name: "home",
                 component: () => import("@/views/Home.vue"),
-                props: (route) => ({ data })
+                children: [
+                  {
+                    path: "review",
+                    component: () => import("@/views/ReviewList.vue"),
+                    beforeEnter: async (to, from, next) => {
+                      data = (await axios.get(`/currentUser/lessonList`)).data;
+                      next();
+                    },
+                    props: (route) => ({ lessonList: data }),
+                  },
+                  {
+                    path: "",
+                    component: () => import("@/views/Panel.vue"),
+                  },
+                ]
               },
+
             ]
           }
         ]
       }
-
       ]
     },
   ]
