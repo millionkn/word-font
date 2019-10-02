@@ -65,7 +65,7 @@ export default Vue.extend({
             )
           ].map(async (componentId: string) => {
             let componentInfo = (await Axios.get(`/component/${componentId}`))
-              .data as component;
+              .data as component & { url: string };
 
             let script: string = (await Axios.get(componentInfo.url, {
               responseType: "text"
