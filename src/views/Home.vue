@@ -1,7 +1,7 @@
 <template>
   <div>
-    <well-come v-if="wellcome"></well-come>
-    <router-view v-else></router-view>
+    <panel v-if="logined"></panel>
+    <well-come v-else></well-come>
   </div>
 </template>
 <script lang="ts">
@@ -13,17 +13,13 @@ import { Info, lessonData, lessonInfo } from "@/types";
 import router from "../router";
 export default Vue.extend({
   setup(props) {
-    let wellcome = ref(true);
-    watch(
-      () => store.state.currentUser,
-      async n => ((wellcome.value = !n) ? router.replace("/") : void 0)
-    );
     return {
-      wellcome
+      logined: store.getters.logined
     };
   },
   components: {
-    WellCome: () => import("@/views/Wellcome.vue")
+    WellCome: () => import("@/views/Wellcome.vue"),
+    Panel: () => import("@/views/Panel.vue")
   }
 });
 </script>

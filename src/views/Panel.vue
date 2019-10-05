@@ -3,7 +3,7 @@
     <div class="block" @click="onClick('/myLesson')">
       <el-card>课程</el-card>
     </div>
-    <div class="block">
+    <div class="block" @click="onClick('/myComponent')">
       <el-card>插件</el-card>
     </div>
     <div class="block">

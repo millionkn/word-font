@@ -19,14 +19,15 @@ export type currentUser = {
 }
 export type word = {
     id: string,
+    describe: string,
     data: {
         [key: string]: string
     }
 }
 export type component = {
-    id: string,
-    uploader: string,
-    info: any,
-    words: number[],
-    url: string,
+    info: {
+        name: string,
+        introduction: string,
+    },
+    words: string[],
 }

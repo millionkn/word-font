@@ -15,6 +15,9 @@ let opt = (<S, K>(opt: StoreOptions<S> & K): K => opt)({
       cont.currentUser = user;
     },
   },
+  getters: {
+    logined: (state) => !!state.currentUser,
+  },
   actions: {
     async reloadCurrentUser(cont) {
       try {
@@ -47,7 +50,8 @@ let opt = (<S, K>(opt: StoreOptions<S> & K): K => opt)({
 })
 let _store = new Vuex.Store(opt);
 let store = <{
+  getters: { [key in keyof typeof opt.getters]: typeof opt.getters[key] },
   dispatch: <K extends keyof typeof opt.actions>(name: K, ...option: typeof opt.actions[typeof name] extends (a: any, ...b: infer X) => any ? X : never) => (ReturnType<typeof opt.actions[typeof name]> extends Promise<any> ? ReturnType<typeof opt.actions[typeof name]> : Promise<ReturnType<typeof opt.actions[typeof name]>>),
   commit: <K extends keyof typeof opt.mutations>(name: K, ...option: typeof opt.mutations[typeof name] extends (a: any, ...b: infer X) => any ? X : never) => (ReturnType<typeof opt.mutations[typeof name]>)
-} & (Omit<typeof _store, "dispatch" | "commit">)>_store;
+} & (Omit<typeof _store, "dispatch" | "commit" | "getters">)>_store;
 export default store

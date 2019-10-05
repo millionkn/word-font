@@ -13,11 +13,10 @@ export default new Router({
   routes: [
     {
       path: '/',
-      component: Empty,
-      async beforeEnter(to, from, next) {
-        await store.dispatch("reloadCurrentUser")
-        next();
-      },
+      component: Empty.extend({
+        beforeRouteEnter: async (to, from, next) => next(void (await store.dispatch("reloadCurrentUser"))),
+        beforeRouteUpdate: async (to, from, next) => next(void (await store.dispatch("reloadCurrentUser"))),
+      }),
       children: [{
         path: "/",
         component: PageContainer,
@@ -25,10 +24,7 @@ export default new Router({
           {
             path: "/login",
             name: "login",
-            beforeEnter(to, from, next) {
-              data = from.path;
-              next();
-            },
+            beforeEnter: (to, from, next) => next(void (data = from.path)),
             component: () => import("@/views/Login.vue"),
             props: () => ({
               currentPath: data,
@@ -39,26 +35,9 @@ export default new Router({
             component: Empty,
             children: [
               {
-                path: "review/:id",
-                component: () => import("@/views/Review.vue"),
-                async beforeEnter(to, from, next) {
-                  if (!store.state.currentUser) {
-                    return next({ name: "login" })
-                  }
-                  data = (await axios.get(`/lesson/${to.params.id}`)).data;
-                  next()
-                },
-                props: () => ({
-                  lesson: data,
-                })
-              },
-              {
                 path: "lesson/:id",
                 component: () => import("@/views/LessonShow.vue"),
-                beforeEnter: async (to, from, next) => {
-                  data = (await axios.get(`/lesson/${to.params.id}`)).data;
-                  next();
-                },
+                beforeEnter: async (to, from, next) => next(void (data = (await axios.get(`/lesson/${to.params.id}`)).data)),
                 props: (route) => ({ data })
               },
               {
@@ -67,25 +46,41 @@ export default new Router({
               },
               {
                 path: "/",
-                name: "home",
                 component: () => import("@/views/Home.vue"),
+              },
+              {
+                path: "",
+                component: Empty.extend({
+                  beforeRouteEnter: (to, from, next) => next(store.state.currentUser ? undefined : { name: "login" }),
+                  beforeRouteUpdate: (to, from, next) => next(store.state.currentUser ? undefined : { name: "login" }),
+                }),
                 children: [
+                  {
+                    path: "review/:id",
+                    component: () => import("@/views/Review.vue"),
+                    beforeEnter: async (to, from, next) => next(void (data = (await axios.get(`/lesson/${to.params.id}`)).data)),
+                    props: () => ({
+                      lesson: data,
+                    })
+                  },
                   {
                     path: "myLesson",
                     component: () => import("@/views/MyLessonList.vue"),
-                    beforeEnter: async (to, from, next) => {
-                      data = (await axios.get(`/currentUser/lessonList`)).data;
-                      next();
-                    },
+                    beforeEnter: async (to, from, next) => next(void (data = (await axios.get(`/currentUser/lessonList`)).data)),
                     props: (route) => ({ lessonList: data }),
                   },
                   {
-                    path: "",
-                    component: () => import("@/views/Panel.vue"),
+                    path: "myComponent/upload",
+                    component: () => import("@/views/CreateComponent.vue"),
                   },
-                ]
+                  {
+                    path: "myComponent",
+                    component: () => import("@/views/MyComponentList.vue"),
+                    beforeEnter: async (to, from, next) => next(void (data = (await axios.get("/currentUser/component")).data)),
+                    props: () => ({ componentList: data })
+                  },
+                ],
               },
-
             ]
           }
         ]
