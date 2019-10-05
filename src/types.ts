@@ -25,9 +25,9 @@ export type word = {
     }
 }
 export type component = {
-    uploader: string,
     info: {
-        introduction?: string,
+        name: string,
+        introduction: string,
     },
-    words: number[],
+    words: string[],
 }

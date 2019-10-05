@@ -1,14 +1,14 @@
 <template>
-  <el-table :data="tableData" :max-height="600">
-    <el-table-column label="id" prop="id"></el-table-column>
+  <el-table :data="showing" :height="height">
+    <el-table-column label="id" prop="id" :width="60"></el-table-column>
     <el-table-column label="描述" prop="describe"></el-table-column>
     <el-table-column align="right">
       <template slot="header">
-        <el-input size="mini" placeholder="输入关键字搜索" v-model="s" />
+        <debounce-input :time="400" size="mini" placeholder="输入关键字搜索" @input="search"></debounce-input>
       </template>
       <template slot-scope="scope">
         <div class="button">
-          <el-button @click="addToList(scope.row)" v-if="findIndex(scope.row)<0">添加到支持列表</el-button>
+          <el-button @click="addToList(scope.row)" v-if="indexOf(scope.row)<0">添加到支持列表</el-button>
           <el-button type="danger" @click="deleteFromList(scope.row)" v-else>移出支持列表</el-button>
         </div>
       </template>
@@ -23,44 +23,63 @@
 <script lang="ts">
 import Vue from "vue";
 import { word } from "../types";
-import { computed, ref, watch } from "@vue/composition-api";
-import { debounce } from "ts-debounce";
+import { ref, watch, onMounted } from "@vue/composition-api";
+import DebounceInput from "@/components/DebounceInput.vue";
 import Axios from "axios";
 export default Vue.extend({
+  components: {
+    DebounceInput
+  },
   props: {
-    data: Array
+    wordIdArray: Array,
+    height: Number
   },
   setup(props) {
-    let propsData = ref(props.data as word[]);
-    let tableData = ref(props.data as word[]);
-    let searching = ref("");
-    // watch(
-    //   () => searching.value,
-    //   async (search: string) => {
-    //     if (search === "" || search === undefined) {
-    //       tableData.value = propsData.value;
-    //     } else {
-    //       tableData.value = (await Axios.get("/word", {
-    //         params: { search }
-    //       })).data;
-    //     }
-    //   }
-    // );
-    let findIndex = (word: word) => propsData.value.indexOf(word);
+    let propsData = ref(props.wordIdArray as string[]);
+    let selected = ref([] as word[]);
+    let showing = ref([] as word[]);
+    let indexOf = (w: word) => selected.value.indexOf(w);
+
+    onMounted(async () => {
+      selected.value = (await Axios.post(
+        "/get/wordCollection",
+        propsData.value
+      )).data as word[];
+      showing.value = selected.value;
+      watch(
+        () => selected.value,
+        wordArray => {
+          propsData.value.splice(
+            0,
+            propsData.value.length,
+            ...wordArray.map(w => w.id)
+          );
+        }
+      );
+    });
     return {
-      s: "",
-      tableData,
+      selected,
+      showing,
       addToList: (word: word) => {
-        propsData.value.push(word);
+        selected.value.push(word);
       },
       deleteFromList(word: word) {
-        let index = findIndex(word);
+        let index = indexOf(word);
         if (index < 0) {
           return;
         }
-        propsData.value.splice(index, 1);
+        selected.value.splice(index, 1);
       },
-      findIndex
+      indexOf,
+      search: async (search: string | undefined) => {
+        if (search === undefined || search === "") {
+          showing.value = selected.value;
+        } else {
+          showing.value = (await Axios.get("/word", {
+            params: { search }
+          })).data;
+        }
+      }
     };
   }
 });

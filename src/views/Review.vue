@@ -44,13 +44,11 @@ export default Vue.extend({
     };
     onMounted(async () => {
       await Promise.all([
-        Promise.all(
-          new Set(
-            lesson.data.map(async x => {
-              let word = (await Axios.get(`/word/${x.wordId}`)).data as word;
-              words[word.id] = word;
-            })
-          )
+        Axios.post("/get/wordCollection", lesson.data.map(x => x.wordId)).then(
+          res => {
+            let wordCollection = res.data as word[];
+            wordCollection.forEach(w => (words[w.id] = w));
+          }
         ),
         Promise.all(
           [

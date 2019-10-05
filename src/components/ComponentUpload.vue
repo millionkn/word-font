@@ -1,34 +1,18 @@
 <template>
-  <div class="root">
+  <el-button @click="onClick" :type="buttonType">
     <input style="display:none" type="file" ref="fileInput" accept="js" />
-    <el-button @click="onClick">选择并开始上传</el-button>
-    <div class="progress" v-if="uploadCallback">
-      <el-progress
-        :percentage="uploadProgress"
-        :status="uploadStatus"
-        :stroke-width="24"
-        :text-inside="true"
-      ></el-progress>
-    </div>
-  </div>
+    {{buttonText}}
+  </el-button>
 </template>
-<style lang="less" scoped>
-.root {
-  display: flex;
-}
-.progress {
-  flex: 1;
-}
-</style>
 <script lang="ts">
 import Vue from "vue";
 import { onMounted, ref } from "@vue/composition-api";
 import Axios from "axios";
 export default Vue.extend({
-  props: ["uploadCallback"],
   setup(props, context) {
     let fileInput: HTMLInputElement;
-    let uploadStatus = ref(undefined as string | undefined);
+    let buttonType = ref(undefined as string | undefined);
+    let buttonText = ref("选择上传");
     let uploadProgress = ref(0);
     let showProgress = ref(false);
     onMounted(() => {
@@ -36,7 +20,8 @@ export default Vue.extend({
     });
     return {
       uploadProgress,
-      uploadStatus,
+      buttonType,
+      buttonText,
       showProgress,
       onClick: async () => {
         await new Promise(res => {
@@ -48,7 +33,7 @@ export default Vue.extend({
         }
         showProgress.value = true;
         try {
-          uploadStatus.value = undefined;
+          buttonType.value = undefined;
           let formData = new FormData();
           formData.append("file", fileInput.files[0]);
           let response = await Axios.post("/upload", formData, {
@@ -57,14 +42,15 @@ export default Vue.extend({
               uploadProgress.value = Math.floor(
                 (event.loaded * 100) / event.total
               );
+              buttonText.value = `上传中...${uploadProgress.value}%`;
             }
           });
-          uploadStatus.value = "success";
-          if (typeof props.uploadCallback === "function") {
-            props.uploadCallback(response.data.code);
-          }
+          buttonType.value = "success";
+          buttonText.value = "上传成功";
+          context.emit("uploadSuccess", response.data);
         } catch (e) {
-          uploadStatus.value = "exception";
+          buttonType.value = "danger";
+          buttonText.value = "重新选择";
         }
       }
     };
