@@ -7,7 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "@vue/composition-api": "^3.0.0",
+    "@vue/composition-api": "^0.3.2",
     "amazeui": "^2.7.2",
     "axios": "^0.19.0",
     "element-ui": "^2.12.0",
