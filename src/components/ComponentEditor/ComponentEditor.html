@@ -1,0 +1,12 @@
+<div>
+  <div class="item">
+    <div class="key">名称:</div>
+    <el-input placeholder="请输入名称" v-model="info.name" class="value"></el-input>
+  </div>
+  <div class="item">
+    <div class="key">说明:</div>
+    <el-input type="textarea" :rows="5" placeholder="请输入说明" v-model="info.introduction" class="value">
+    </el-input>
+  </div>
+  <word-selector :prop="propWordSelector"></word-selector>
+</div>

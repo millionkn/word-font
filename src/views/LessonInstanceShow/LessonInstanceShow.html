@@ -1,0 +1,13 @@
+<el-card>
+  <div slot="header" class="info">
+    <img :src="lesson.info.image" class="image" v-if="hasImage" />
+    <div class="flex-column">
+      <div class="message">{{lesson.info.message||"没有说明"}}</div>
+      <div class="button">
+        <el-button v-if="showCopy" type="primary" @click="copyHandler">复制到课表</el-button>
+        <el-button v-else type="primary" plain disabled>已添加</el-button>
+      </div>
+    </div>
+  </div>
+  <div>{{lesson.id}}</div>
+</el-card>

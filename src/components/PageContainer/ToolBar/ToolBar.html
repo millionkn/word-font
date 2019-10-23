@@ -1,0 +1,4 @@
+<el-button-group>
+  <el-button v-for="x in data" :key="x.path" :disabled="currentPath===x.path" @click="click(x.path)">{{x.label}}
+  </el-button>
+</el-button-group>

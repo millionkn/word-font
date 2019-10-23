@@ -1,0 +1,20 @@
+<el-card>
+  <el-button @click="add">添加</el-button>
+  <el-table :data="componentList">
+    <el-table-column label="名称" prop="info.name"></el-table-column>
+    <el-table-column label="操作">
+      <template slot-scope="scope" class="unwrap">
+        <el-button @click="uploadFile(scope.row)">重新上传</el-button>
+        <el-button @click="edit(scope.row)">编辑信息</el-button>
+        <el-button @click="deleteComponent(scope.row)">删除</el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+  <el-dialog title="重新上传" :visible="true" v-if="uploadVisible" @close="uploadVisible=false">
+    <upload @uploadSuccess="uploadSuccessHandler"></upload>
+  </el-dialog>
+  <el-dialog title="编辑信息" :visible="true" v-if="updateVisible" @close="updateVisible=false">
+    <component-editor :prop="propComponentEditor"></component-editor>
+    <el-button type="primary" @click="syncEditingComponent">提交</el-button>
+  </el-dialog>
+</el-card>

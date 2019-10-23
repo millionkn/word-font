@@ -1,0 +1,15 @@
+<el-table :data="showing" :height="height">
+  <el-table-column label="id" prop="id" :width="60"></el-table-column>
+  <el-table-column label="描述" prop="describe"></el-table-column>
+  <el-table-column align="right">
+    <template slot="header">
+      <debounce-input :prop="propDebounceInput" @input="search"></debounce-input>
+    </template>
+    <template slot-scope="scope">
+      <div class="button">
+        <el-button @click="addToList(scope.row)" v-if="indexOf(scope.row)<0">添加到支持列表</el-button>
+        <el-button type="danger" @click="deleteFromList(scope.row)" v-else>移出支持列表</el-button>
+      </div>
+    </template>
+  </el-table-column>
+</el-table>

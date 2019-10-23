@@ -1,0 +1,17 @@
+<div>
+  <el-card v-for="lesson in lessonList" :key="lesson.id">
+    <div slot="header">{{lesson.info.name}}</div>
+    <div class="root">
+      <div class="left" v-if="lesson.info.image?true:false">
+        <img :src="lesson.info.image" class="image" />
+      </div>
+      <div class="right">
+        <div class="text">{{lesson.info.message||"没有说明"}}</div>
+        <div class="buttons">
+          <span class="tab" />
+          <el-button type="primary" @click="click(lesson)">复习</el-button>
+        </div>
+      </div>
+    </div>
+  </el-card>
+</div>

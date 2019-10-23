@@ -1,0 +1,5 @@
+<el-card>
+  <div class="root">
+    <lesson v-for="lesson in lessonList" :key="lesson.id" :prop="propLesson(lesson)" class="lesson"></lesson>
+  </div>
+</el-card>
