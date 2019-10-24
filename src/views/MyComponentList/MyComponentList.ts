@@ -3,7 +3,7 @@ import { Component, UploadReturnType, Word } from "@/types";
 import router from "@/router";
 import { ref } from "@vue/composition-api";
 import ComponentEditor, { propMethod as propComponentEditor } from "@/components/ComponentEditor"
-import Upload from "@/components/ComponentUpload";
+import Upload from "@/components/Upload";
 import { getComponentSupportWord, deleteComponent, syncComponent } from '@/service';
 
 export type propMethod = () => {

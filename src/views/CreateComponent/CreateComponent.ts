@@ -3,7 +3,7 @@ import { Word, Component, UploadReturnType } from "@/types";
 import router from "@/router";
 import { createComponent } from '@/service';
 import ComponentEditor, { propMethod as propComponentEditor } from "@/components/ComponentEditor";
-import Upload from "@/components/ComponentUpload";
+import Upload from "@/components/Upload";
 export type propMethod = () => {
   component: Component[]
 }
