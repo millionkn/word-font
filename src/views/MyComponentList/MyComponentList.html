@@ -11,7 +11,7 @@
     </el-table-column>
   </el-table>
   <el-dialog title="重新上传" :visible="true" v-if="uploadVisible" @close="uploadVisible=false">
-    <upload @uploadSuccess="uploadSuccessHandler"></upload>
+    <upload :prop="propUpload"></upload>
   </el-dialog>
   <el-dialog title="编辑信息" :visible="true" v-if="updateVisible" @close="updateVisible=false">
     <component-editor :prop="propComponentEditor"></component-editor>

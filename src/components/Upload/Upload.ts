@@ -1,9 +1,15 @@
 import Vue from "vue";
 import { onMounted, ref } from "@vue/composition-api";
 import { upload } from '@/service';
+import { UploadReturnType } from '@/types';
 
+export type propMethod = () => {
+  handlerUpload: (uploadReturn: UploadReturnType) => void
+}
 export default Vue.extend({
-  setup(props, context) {
+  props: ["prop"],
+  setup(propsInit, context) {
+    let props = (propsInit.prop as propMethod)();
     let fileInput: HTMLInputElement;
     let buttonType = ref(undefined as string | undefined);
     let buttonText = ref("选择上传");
@@ -33,7 +39,7 @@ export default Vue.extend({
           });
           buttonType.value = "success";
           buttonText.value = "上传成功";
-          context.emit("uploadSuccess", uploadReturn);
+          props.handlerUpload(uploadReturn);
         } catch (e) {
           buttonType.value = "danger";
           buttonText.value = "重新选择";

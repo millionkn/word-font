@@ -3,7 +3,7 @@ import { Component, UploadReturnType, Word } from "@/types";
 import router from "@/router";
 import { ref } from "@vue/composition-api";
 import ComponentEditor, { propMethod as propComponentEditor } from "@/components/ComponentEditor"
-import Upload from "@/components/Upload";
+import Upload, { propMethod as propUpload } from "@/components/Upload";
 import { getComponentSupportWord, deleteComponent, syncComponent } from '@/service';
 
 export type propMethod = () => {
@@ -44,10 +44,12 @@ export default Vue.extend({
         await syncComponent(editing.value, { word: words.value });
         updateVisible.value = false;
       },
-      uploadSuccessHandler: async (data: UploadReturnType) => {
-        await syncComponent(editing.value, { upload: data });
-        uploadVisible.value = false;
-      },
+      propUpload: <propUpload>(() => ({
+        handlerUpload: async (data: UploadReturnType) => {
+          await syncComponent(editing.value, { upload: data });
+          uploadVisible.value = false;
+        }
+      })),
       propComponentEditor: <propComponentEditor>(() => ({
         info: editing.value.info,
         words: words.value,

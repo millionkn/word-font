@@ -3,7 +3,7 @@ import { Word, Component, UploadReturnType } from "@/types";
 import router from "@/router";
 import { createComponent } from '@/service';
 import ComponentEditor, { propMethod as propComponentEditor } from "@/components/ComponentEditor";
-import Upload from "@/components/Upload";
+import Upload, { propMethod as propUpload } from "@/components/Upload";
 export type propMethod = () => {
   component: Component[]
 }
@@ -25,10 +25,12 @@ export default Vue.extend({
         info,
         words: selectedWord,
       })),
-      uploadSuccess: async (res: UploadReturnType) => {
-        await createComponent(info, selectedWord, res);
-        await router.back();
-      },
+      propUpload: <propUpload>(() => ({
+        handlerUpload: async (res: UploadReturnType) => {
+          await createComponent(info, selectedWord, res);
+          await router.back();
+        },
+      })),
     }
   }
 });
