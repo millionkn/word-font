@@ -33,7 +33,6 @@ export default Vue.extend({
           });
           buttonType.value = "success";
           buttonText.value = "上传成功";
-          console.log(uploadReturn);
           context.emit("uploadSuccess", uploadReturn);
         } catch (e) {
           buttonType.value = "danger";

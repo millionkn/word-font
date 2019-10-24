@@ -26,7 +26,6 @@ export default Vue.extend({
         words: selectedWord,
       })),
       uploadSuccess: async (res: UploadReturnType) => {
-        console.log(res)
         await createComponent(info, selectedWord, res);
         await router.back();
       },
