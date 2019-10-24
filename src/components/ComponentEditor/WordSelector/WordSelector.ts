@@ -28,17 +28,17 @@ export default Vue.extend({
         if (index < 0) { return; }
         selected.value.splice(index, 1);
       },
-      search: async (describe: string | undefined) => {
-        if (describe === undefined || describe === "") {
-          showing.value = selected.value;
-        } else {
-          showing.value = await searchWordByDescribe(describe)
-        }
-      },
       propDebounceInput: <propDebounceInput>(() => ({
         time: 400,
         size: "mini",
         placeholder: "输入关键字搜索",
+        callback: async (describe: string | undefined) => {
+          if (describe === undefined || describe === "") {
+            showing.value = selected.value;
+          } else {
+            showing.value = await searchWordByDescribe(describe)
+          }
+        }
       }))
     };
   }

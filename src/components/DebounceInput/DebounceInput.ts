@@ -7,10 +7,11 @@ export type propMethod = () => {
   time: number,
   size?: InstanceType<typeof Input>["size"],
   placeholder?: InstanceType<typeof Input>["placeholder"],
+  callback: (value: string) => void,
 }
 export default Vue.extend({
   props: ["prop"],
-  setup(propsInit, cont) {
+  setup(propsInit) {
     let props = (propsInit.prop as propMethod)();
     let time = (props.time || 0) as number;
     let text = ref("");
@@ -23,7 +24,7 @@ export default Vue.extend({
         if (last === text.value) {
           return;
         }
-        cont.emit("input", last = text.value);
+        props.callback(last = text.value);
       }, time)
     };
   }

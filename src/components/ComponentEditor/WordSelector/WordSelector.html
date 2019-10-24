@@ -3,7 +3,7 @@
   <el-table-column label="描述" prop="describe"></el-table-column>
   <el-table-column align="right">
     <template slot="header">
-      <debounce-input :prop="propDebounceInput" @input="search"></debounce-input>
+      <debounce-input :prop="propDebounceInput"></debounce-input>
     </template>
     <template slot-scope="scope">
       <div class="button">
