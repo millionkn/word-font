@@ -1,0 +1,42 @@
+<el-tabs type="border-card">
+  <el-tab-pane>
+    <span slot="label">总览</span>
+    <el-select v-model="wordWillBeAdded" @change="addWord" filterable remote placeholder="添加单词"
+      :remote-method="searchWord" :loading="isSearchingWord">
+      <el-option v-for="word in wordWillBeAddedOption" :key="word.id" :label="word.describe" :value="word">
+      </el-option>
+    </el-select>
+    <el-select v-model="componentWillBeAdded" @change="addComponent" filterable remote placeholder="添加插件"
+      :remote-method="searchComponent" :loading="isSearchingComponent">
+      <el-option v-for="component in componentWillBeAddedOption" :key="component.id" :label="component.info.name"
+        :value="component">
+      </el-option>
+    </el-select>
+    <el-table :data="words" height="100%" :default-sort="{prop:'describe'}" row-key="id">
+      <el-table-column>
+        <template #default="scope">
+          {{scope.row.describe}}
+        </template>
+      </el-table-column>
+      <el-table-column align="right" :width="120">
+        <template #default="scope">
+          <el-button type="danger" @click="handleDeleteWord(scope.$index)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-tab-pane>
+  <el-tab-pane v-for="component in components" :key="components.id">
+    <template v-slot:label>
+      <span>{{component.info.name}}</span>
+    </template>
+    <el-table :data="data(component)" height="100%" @selection-change="handleSelectionChange(...arguments,component)"
+      :default-sort="{prop:'word.describe'}" row-key="support.id">
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column>
+        <template #default="scope">
+          {{scope.row}}
+        </template>
+      </el-table-column>
+    </el-table>
+  </el-tab-pane>
+</el-tabs>

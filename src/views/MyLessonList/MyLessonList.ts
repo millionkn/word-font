@@ -11,6 +11,7 @@ export default Vue.extend({
     let props = (propsInit.prop as propMethod)();
     return {
       lessonList: props.lessonList,
+      handlerCreateLesson: async () => { await router.push(`/myLesson/create`).finally() },
       handlerReview: async (lesson: Lesson) => { await router.push(`/review/${lesson.id}`).finally() }
     };
   }

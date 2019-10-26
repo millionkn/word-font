@@ -11,16 +11,29 @@ export type UserData = {
 export type UploadReturnType = {
   code: string
 }
-export type Lesson = {
-  id: string,
-  showing: boolean,
-  owner: string,
-  info: {
+export class Lesson {
+  id!: string;
+  showing!: boolean;
+  owner!: string;
+  info!: {
     name: string,
     message: string,
     image: string,
   }
+  constructor(initObj: any) {
+    deepAssignWithoutDefinedProperty(this, initObj, {
+      id: "0",
+      showing: false,
+      owner: "0",
+      info: {
+        name: "",
+        message: "",
+        image: "",
+      }
+    })
+  }
 }
+
 export type Word = {
   id: string,
   describe: string,

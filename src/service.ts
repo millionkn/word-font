@@ -145,8 +145,22 @@ export async function syncComponent(component: Component, extra?: {
   }
   await axios.put(`/component/${component.id}`, data, params)
 }
+export async function searchComponentByName(name: string) {
+  return (await axios.get(`/component/search/${name}`)).data as Component[];
+}
+export async function getComponentCollection(componentId: string[]) {
+  return await Promise.all(
+    componentId.map(cId => axios.get(`/component/${cId}`).then(res => res.data as Component))
+  )
+}
 //support
 export async function getLessonContent(lesson: Lesson) {
   [lesson] = withOutOb(lesson);
   return (await Axios.get(`/support/lesson/${lesson.id}`)).data as Support[]
+}
+export async function getSupportByWord(word: Word) {
+  return (await Axios.get(`/support/word/${word.id}`)).data as Support[]
+}
+export async function getSupportByComponent(component: Component) {
+  return (await Axios.get(`/support/component/${component.id}`)).data as Support[]
 }

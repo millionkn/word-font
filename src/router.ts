@@ -10,7 +10,7 @@ import { propMethod as propReview } from "@/views/Review";
 import { propMethod as propMyLessonList } from "@/views/MyLessonList";
 import { propMethod as propMyComponentList } from "@/views/MyComponentList";
 import { propMethod as propCreateComponent } from "@/views/CreateComponent";
-
+import { propMethod as propCreateLesson } from "@/views/CreateLesson";
 function asyncProp<T extends () => {}>(
   callback: (to: Route, from: Route) => Promise<ReturnType<T>>
 ) {
@@ -71,6 +71,13 @@ let router = new Router({
                 lesson: await getLessonById(to.params.id),
               }
             }),
+          },
+          {
+            path: "myLesson/create",
+            component: () => import("@/views/CreateLesson"),
+            ...asyncProp<propCreateLesson>(async () => ({
+              lesson: (await afterLogined()).lesson,
+            }))
           },
           {
             path: "myLesson",
