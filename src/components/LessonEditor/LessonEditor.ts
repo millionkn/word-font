@@ -17,9 +17,6 @@ export default Vue.extend({
     let props = (propsInit.prop as propMethod)();
     return {
       lesson: props.lesson,
-      propUpload: <propUpload>(() => ({
-        handlerUpload: () => { }
-      })),
       propSupportEditor: (): ReturnType<propSupportEditor> => ({
         support: props.support,
       })
