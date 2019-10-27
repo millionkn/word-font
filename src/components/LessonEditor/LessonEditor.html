@@ -9,5 +9,11 @@
     <el-input class="value" v-model="lesson.info.message" placeholder="课程说明"></el-input>
   </div>
   <br />
+  <div class="item">
+    <span class="key">可见性</span>
+    <el-switch v-model="lesson.showing" active-text="公开" inactive-text="私人"></el-switch>
+  </div>
+
+  <br />
   <support-editor :prop="propSupportEditor"></support-editor>
 </div>
