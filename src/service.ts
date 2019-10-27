@@ -88,13 +88,13 @@ export async function createLesson(lesson: Omit<Lesson, "id" | "owner">, support
   [lesson, support] = withOutOb(lesson, support);
   let user = await afterLogined();
   await axios.post("/lesson", { lesson, support: support.map(s => s.id) });
-  user.lesson = await getCurrentUserLesson();
+  user.lesson.splice(0, user.lesson.length, ...await getCurrentUserLesson());
 }
 export async function deleteLesson(lesson: Lesson) {
   [lesson] = withOutOb(lesson);
   let user = await afterLogined();
   await axios.delete(`/lesson/${lesson.id}`);
-  user.lesson = await getCurrentUserLesson();
+  user.lesson.splice(0, user.lesson.length, ...await getCurrentUserLesson());
 }
 //word
 export async function searchWordByDescribe(describe: string) {
@@ -115,8 +115,8 @@ async function getCurrentUserComponent() {
 export async function deleteComponent(component: Component) {
   [component] = withOutOb(component);
   let user = await afterLogined();
-  (await axios.delete(`/component/${component.id}`)).data;
-  user.component = await getCurrentUserComponent();
+  await axios.delete(`/component/${component.id}`);
+  user.component.splice(0, user.component.length, ...await getCurrentUserComponent());
 }
 export async function createComponent(componentInfo: Component["info"], word: Word[], upload: UploadReturnType) {
   [componentInfo] = withOutOb(componentInfo);
@@ -126,7 +126,7 @@ export async function createComponent(componentInfo: Component["info"], word: Wo
       info: componentInfo,
       word: word.map(w => w.id)
     });
-  user.component = await getCurrentUserComponent();
+  user.component.splice(0, user.component.length, ...await getCurrentUserComponent());
 }
 export async function syncComponent(component: Component, extra?: {
   word?: Word[],

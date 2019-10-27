@@ -4,7 +4,7 @@ import router from "@/router";
 import { ref } from "@vue/composition-api";
 import ComponentEditor, { propMethod as propComponentEditor } from "@/components/ComponentEditor"
 import Upload, { propMethod as propUpload } from "@/components/Upload";
-import { getComponentSupportWord, deleteComponent, syncComponent } from '@/service';
+import { getComponentSupportWord, deleteComponent, syncComponent, afterLogined } from '@/service';
 
 export type propMethod = () => {
   component: Component[]
@@ -38,7 +38,6 @@ export default Vue.extend({
       },
       deleteComponent: async (row: Component) => {
         await deleteComponent(row);
-        componentList.splice(componentList.indexOf(row), 1);
       },
       syncEditingComponent: async () => {
         await syncComponent(editing.value, { word: words.value });

@@ -15,7 +15,6 @@ export default Vue.extend({
       handlerCreateLesson: async () => { await router.push(`/myLesson/create`).finally() },
       handlerDelete: async (lesson: Lesson) => {
         await deleteLesson(lesson);
-        props.lessonList.splice(props.lessonList.indexOf(lesson), 1)
       },
       handlerReview: async (lesson: Lesson) => { await router.push(`/review/${lesson.id}`).finally() }
     };
