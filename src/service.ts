@@ -96,6 +96,14 @@ export async function deleteLesson(lesson: Lesson) {
   await axios.delete(`/lesson/${lesson.id}`);
   user.lesson.splice(0, user.lesson.length, ...await getCurrentUserLesson());
 }
+export async function syncLesson(lesson: Lesson, support: Support[]) {
+  [lesson, support] = withOutOb(lesson, support);
+  await axios.put(`/lesson/${lesson.id}`, {
+    info: lesson.info,
+    showing: lesson.showing,
+    support: support.map(s => s.id)
+  })
+}
 //word
 export async function searchWordByDescribe(describe: string) {
   return (await axios.get(`/word/search/${describe}`)).data as Word[];
