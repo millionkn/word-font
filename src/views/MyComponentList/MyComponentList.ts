@@ -43,16 +43,16 @@ export default Vue.extend({
         await syncComponent(editing.value, { word: words.value });
         updateVisible.value = false;
       },
-      propUpload: <propUpload>(() => ({
+      propUpload: (): ReturnType<propUpload> => ({
         handlerUpload: async (data: UploadReturnType) => {
           await syncComponent(editing.value, { upload: data });
           uploadVisible.value = false;
         }
-      })),
-      propComponentEditor: <propComponentEditor>(() => ({
+      }),
+      propComponentEditor: (): ReturnType<propComponentEditor> => ({
         info: editing.value.info,
         words: words.value,
-      }))
+      })
     };
   }
 });

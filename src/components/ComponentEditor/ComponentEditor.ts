@@ -17,9 +17,9 @@ export default Vue.extend({
     let props = (propsInit.prop as propMethod)();
     return {
       info: reactive(props.info),
-      propWordSelector: <propWordSelector>(() => ({
+      propWordSelector: (): ReturnType<propWordSelector> => ({
         selectedWords: props.words,
-      }))
+      })
     };
   }
 })

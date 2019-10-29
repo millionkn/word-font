@@ -6,7 +6,7 @@ export default Vue.extend({
   },
   setup() {
     return {
-      propLogin: <propMethodLogin>(() => ({}))
+      propLogin: (): ReturnType<propMethodLogin> => ({})
     }
   }
 });

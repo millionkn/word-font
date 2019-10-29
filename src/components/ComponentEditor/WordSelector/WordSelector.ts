@@ -28,7 +28,7 @@ export default Vue.extend({
         if (index < 0) { return; }
         selected.value.splice(index, 1);
       },
-      propDebounceInput: <propDebounceInput>(() => ({
+      propDebounceInput: (): ReturnType<propDebounceInput> => ({
         time: 400,
         size: "mini",
         placeholder: "输入关键字搜索",
@@ -39,7 +39,7 @@ export default Vue.extend({
             showing.value = await searchWordByDescribe(describe)
           }
         }
-      }))
+      })
     };
   }
 });

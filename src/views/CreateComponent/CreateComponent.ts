@@ -25,12 +25,12 @@ export default Vue.extend({
         info,
         words: selectedWord,
       })),
-      propUpload: <propUpload>(() => ({
+      propUpload: (): ReturnType<propUpload> => ({
         handlerUpload: async (res: UploadReturnType) => {
           await createComponent(info, selectedWord, res);
           await router.back();
         },
-      })),
+      }),
     }
   }
 });
