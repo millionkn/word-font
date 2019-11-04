@@ -1,10 +1,27 @@
 <div class="root">
-  <div v-if="!!currentUser" class="root">
+  <div
+    v-if="!!currentUser"
+    class="root"
+  >
     <span>欢迎您,{{currentUser.info.username}}</span>
     <el-avatar icon="el-icon-user-solid"></el-avatar>
     <el-link @click="logout">退出</el-link>
   </div>
   <div v-else>
-    <el-link type="primary" @click="handleLogin">登录</el-link>
+    <el-button-group>
+      <el-button
+        type="primary"
+        size="mini"
+        @click="handleLogin"
+      >
+        登录
+      </el-button>
+      <el-button
+        type="primary"
+        size="mini"
+      >
+        注册
+      </el-button>
+    </el-button-group>
   </div>
 </div>

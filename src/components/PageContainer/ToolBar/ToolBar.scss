@@ -1,0 +1,16 @@
+.root{
+  @include flex-container;
+  >:last-child{
+    margin-right:10px;
+  }
+}
+.tab{
+  @include flex-container;
+  @include secondary;
+  @include button;
+  padding:0 25px;
+  margin: 0 2px;
+  &.selected{
+    @include primary;
+  }
+}

@@ -1,0 +1,14 @@
+.el-header {
+  @include secondary;
+  @include flex-container;
+  justify-content:flex-end;
+}
+.el-main {
+  @include primary;
+  @include flex-container;
+  align-items:stretch;
+  .page {
+    width: 800px;
+  }
+}
+

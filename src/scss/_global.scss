@@ -1,0 +1,24 @@
+@mixin primary {
+  background-color: #ffc000;
+  color: #2b3648;
+}
+@mixin secondary {
+  background-color: #2b3648;
+  color: #fcfaf2;
+}
+@mixin clickable{
+  cursor:pointer;
+}
+@mixin button {
+  @include clickable();
+  font-weight: 600;
+}
+@mixin flex-container{
+  display: flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  .item{
+    flex:1;
+  }
+}
