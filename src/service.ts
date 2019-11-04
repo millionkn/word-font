@@ -20,20 +20,16 @@ const axios = _axios.create({
 });
 
 export async function syncCurrentUser() {
-  try {
-    await _axios.head("/currentUser")
+  if ((await axios.get("/isLogined")).data.isLogined) {
     if (!store.getters.currentUser) {
       store.commit("setCurrentUser", {
-        info: (await _axios.get("/currentUser")).data,
+        info: (await axios.get("/currentUser")).data,
         lesson: await getCurrentUserLesson(),
         component: await getCurrentUserComponent(),
       });
     }
-  } catch (error) {
-    if (error.response.status === 401) {
-      return store.commit("setCurrentUser", undefined);
-    }
-    throw error;
+  } else {
+    store.commit("setCurrentUser", undefined);
   }
 }
 export async function afterLogined() {
