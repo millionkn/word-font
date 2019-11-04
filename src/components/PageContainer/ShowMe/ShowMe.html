@@ -1,11 +1,21 @@
 <div class="root">
-  <div
-    v-if="!!currentUser"
-    class="root"
-  >
-    <span>欢迎您,{{currentUser.info.username}}</span>
-    <el-avatar icon="el-icon-user-solid"></el-avatar>
-    <el-link @click="logout">退出</el-link>
+  <div v-if="!!currentUser">
+    <el-popover
+      placement="top-start"
+      trigger="hover"
+    >
+      <avatar
+        slot="reference"
+        :username="currentUser.info.username"
+        :size="35"
+        :rounded="false"
+      ></avatar>
+      <div>
+        <el-link @click="logout">退出</el-link>
+      </div>
+    </el-popover>
+
+
   </div>
   <div v-else>
     <el-button-group>

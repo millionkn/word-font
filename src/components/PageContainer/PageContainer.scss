@@ -1,7 +1,14 @@
 .el-header {
   @include secondary;
   @include flex-container;
-  justify-content:flex-end;
+  justify-content:space-around;
+  .logo{
+    flex:0.1;
+    @include flex-container;
+  }
+  .item{
+    @include flex-container;
+  }
 }
 .el-main {
   @include primary;

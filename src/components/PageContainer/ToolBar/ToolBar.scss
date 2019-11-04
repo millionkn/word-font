@@ -1,7 +1,10 @@
 .root{
   @include flex-container;
-  >:last-child{
-    margin-right:10px;
+  :first-child{
+    margin-left: 0;
+  }
+  :last-child{
+    margin-right: 0;
   }
 }
 .tab{
