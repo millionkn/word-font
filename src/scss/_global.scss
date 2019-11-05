@@ -1,10 +1,13 @@
-@mixin primary {
+@mixin color-bright {
   background-color: #ffc000;
   color: #2b3648;
 }
-@mixin secondary {
+@mixin color-dark {
   background-color: #2b3648;
   color: #fcfaf2;
+}
+@mixin color-background {
+  background-color:#fcfaf2;
 }
 @mixin clickable{
   cursor:pointer;

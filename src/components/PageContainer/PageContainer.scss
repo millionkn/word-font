@@ -1,5 +1,5 @@
 .el-header {
-  @include secondary;
+  @include color-dark;
   @include flex-container;
   justify-content:space-around;
   .logo{
@@ -11,7 +11,7 @@
   }
 }
 .el-main {
-  @include primary;
+  @include color-background;
   @include flex-container;
   align-items:stretch;
   .page {
