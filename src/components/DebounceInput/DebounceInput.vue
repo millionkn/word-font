@@ -1,5 +1,5 @@
 
 <template src="./DebounceInput.html"></template>
-<style src="./DebounceInput.sass" lang="sass" scoped></style>
+<style src="./DebounceInput.scss" lang="scss" scoped></style>
 <script src="./DebounceInput.ts" lang="ts"></script>
     

@@ -1,3 +1,3 @@
 <template src="./Upload.html"></template>
-<style src="./Upload.sass" lang="sass" scoped></style>
+<style src="./Upload.scss" lang="scss" scoped></style>
 <script src="./Upload.ts" lang="ts"></script>

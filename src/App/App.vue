@@ -1,3 +1,3 @@
 <template src="./App.html"></template>
-<style lang="sass" src="./App.sass"></style>
+<style lang="scss" src="./App.scss"></style>
 <script src="./App.ts" lang="ts"></script>

@@ -1,5 +1,5 @@
 
 <template src="./LessonList.html"></template>
-<style src="./LessonList.sass" lang="sass" scoped></style>
+<style src="./LessonList.scss" lang="scss" scoped></style>
 <script lang="ts" src="./LessonList.ts"></script>
     

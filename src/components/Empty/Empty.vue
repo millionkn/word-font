@@ -1,5 +1,5 @@
 
 <template src="./Empty.html"></template>
-<style src="./Empty.sass" lang="sass" scoped></style>
+<style src="./Empty.scss" lang="scss" scoped></style>
 <script src="./Empty.ts" lang="ts"></script>
     

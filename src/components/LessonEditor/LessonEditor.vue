@@ -1,3 +1,3 @@
 <template src="./LessonEditor.html"></template>
-<style src="./LessonEditor.sass" lang="sass" scoped></style>
+<style src="./LessonEditor.scss" lang="scss" scoped></style>
 <script src="./LessonEditor.ts" lang="ts"></script>

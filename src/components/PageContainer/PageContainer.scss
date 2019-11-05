@@ -1,21 +1,26 @@
 .el-header {
   @include color-dark;
   @include flex-container;
-  justify-content:space-around;
-  .logo{
-    flex:0.1;
+  justify-content: space-around;
+  align-items: stretch;
+
+  .logo {
+    flex: 0.1;
     @include flex-container;
   }
-  .item{
+
+  .item {
     @include flex-container;
+    align-items: stretch;
   }
 }
+
 .el-main {
   @include color-background;
   @include flex-container;
-  align-items:stretch;
+  align-items: stretch;
+
   .page {
     width: 800px;
   }
 }
-

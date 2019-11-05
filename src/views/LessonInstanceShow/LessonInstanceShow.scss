@@ -1,0 +1,29 @@
+.el-card {
+  height: 100%;
+}
+
+.info {
+  display: flex;
+  align-items: stretch;
+  height: 150px;
+
+  .image {
+    width: 200px;
+  }
+
+  .flex-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .message {
+      flex: 1;
+    }
+  }
+
+  .button {
+    .el-button {
+      float: right;
+    }
+  }
+}

@@ -1,19 +1,24 @@
-.root{
+.root {
   @include flex-container;
-  :first-child{
+  align-items: stretch;
+
+  :first-child {
     margin-left: 0;
   }
-  :last-child{
+
+  :last-child {
     margin-right: 0;
   }
 }
-.tab{
+
+.tab {
   @include flex-container;
   @include color-dark;
   @include button;
-  padding:0 25px;
+  padding: 0 25px;
   margin: 0 2px;
-  &.selected{
+
+  &.selected {
     @include color-bright;
   }
 }

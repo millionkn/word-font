@@ -1,5 +1,5 @@
 
 <template src="./MyComponentList.html"></template>
-<style src="./MyComponentList.sass" lang="sass" scoped></style>
+<style src="./MyComponentList.scss" lang="scss" scoped></style>
 <script src="./MyComponentList.ts" lang="ts"></script>
     

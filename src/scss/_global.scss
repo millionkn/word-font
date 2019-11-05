@@ -2,26 +2,32 @@
   background-color: #ffc000;
   color: #2b3648;
 }
+
 @mixin color-dark {
   background-color: #2b3648;
   color: #fcfaf2;
 }
+
 @mixin color-background {
-  background-color:#fcfaf2;
+  background-color: #fcfaf2;
 }
-@mixin clickable{
-  cursor:pointer;
+
+@mixin clickable {
+  cursor: pointer;
 }
+
 @mixin button {
   @include clickable();
   font-weight: 600;
 }
-@mixin flex-container{
+
+@mixin flex-container {
   display: flex;
-  align-items:center;
-  justify-content:center;
-  height:100%;
-  .item{
-    flex:1;
+  align-items: center;
+  justify-content: center;
+
+  //height:100%;
+  .item {
+    flex: 1;
   }
 }
