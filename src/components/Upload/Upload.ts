@@ -29,9 +29,7 @@ export default Vue.extend({
         }
         try {
           buttonType.value = undefined;
-          let formData = new FormData();
-          formData.append("file", fileInput.files[0]);
-          let uploadReturn = await upload(formData, {
+          let uploadReturn = await upload(fileInput.files[0], {
             onUploadProgress: event => {
               let progress = Math.floor((event.loaded * 100) / event.total);
               buttonText.value = `上传中...${progress}%`;

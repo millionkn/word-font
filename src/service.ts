@@ -1,4 +1,3 @@
-import _axios from "axios";
 import { UserData, Lesson, Component, UploadReturnType, Word, Support } from "@/types";
 import Axios from 'axios';
 import store from './store';
@@ -15,7 +14,7 @@ const withOutOb = (() => {
   return (...obj: any[]): any[] => obj.map(o => JSON.parse(JSON.stringify(_withOutOb(o))))
 })();
 
-const axios = _axios.create({
+const axios = Axios.create({
   baseURL: "/",
 });
 
@@ -50,7 +49,7 @@ export async function login(form: {
   password: string,
 }) {
   [form] = withOutOb(form);
-  let data = (await _axios.post("/login", form)).data;
+  let data = (await axios.post("/login", form)).data;
   if (data.err) {
     throw data.err
   }
@@ -58,17 +57,29 @@ export async function login(form: {
 }
 
 export async function logout() {
-  await _axios.post("/logout").catch(() => { });
+  await axios.post("/logout").catch(() => { });
   store.commit("setCurrentUser", undefined);
 }
 
 //文件
-export async function upload(formData: FormData, option: typeof axios.post extends (a: any, b: any, c: infer T) => any ? T : never) {
-  [option] = withOutOb(Object.assign({}, option, { headers: { "Content-Type": "multipart/form-data" } }));
+export async function upload(file: File, option: typeof axios.post extends (a: any, b: any, c: infer T) => any ? T : never) {
+  let formData = new FormData();
+  formData.append("file", file);
+  [option] = Object.assign({}, withOutOb(option), { headers: { "Content-Type": "multipart/form-data" } });
   return (await axios.post("/upload", formData, option)).data as UploadReturnType
 }
-export async function getComponentFile(componentId: string) {
-  return (await axios.get(`/file/component/${componentId}`)).data as string;
+async function getBlob(arg: UploadReturnType) {
+  return new Blob([(await Axios.get(`/blob/${arg.fileCode}`, {
+    responseType: 'blob'
+  })).data])
+}
+export function getComponentFile(componentId: string) {
+  return new Promise<string>(async (res) => {
+    let blob = await getBlob((await axios.get(`/fileCode/component/${componentId}`)).data as UploadReturnType);
+    let reader = new FileReader();
+    reader.onload = () => res(new String(reader.result).toString())
+    reader.readAsText(blob);
+  })
 }
 //lesson
 export async function getLessonList() {
@@ -125,8 +136,9 @@ export async function deleteComponent(component: Component) {
 export async function createComponent(componentInfo: Component["info"], word: Word[], upload: UploadReturnType) {
   [componentInfo] = withOutOb(componentInfo);
   let user = await afterLogined();
-  await axios.post(`/component?code=${upload.code}`,
+  await axios.post(`/component`,
     {
+      fileCode: upload.fileCode,
       info: componentInfo,
       word: word.map(w => w.id)
     });
@@ -144,7 +156,7 @@ export async function syncComponent(component: Component, extra?: {
       Object.assign(data, { word: extra.word.map(w => w.id) })
     }
     if (extra.upload) {
-      Object.assign(params, { code: extra.upload.code })
+      Object.assign(params, { code: extra.upload.fileCode })
     }
   }
   await axios.put(`/component/${component.id}`, data, params)

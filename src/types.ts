@@ -9,7 +9,7 @@ export type UserData = {
   lesson: Lesson[],
 }
 export type UploadReturnType = {
-  code: string
+  fileCode: string
 }
 export class Lesson {
   id!: string;
