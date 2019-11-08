@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { ref } from "@vue/composition-api";
 import { Lesson } from "@/types";
-import { createLesson, getLessonContent } from "@/service"
+import { createLesson, getLessonContent, getAsyncRefURL } from "@/service"
 import SupportShower, { propMethod as propSupportShower } from '@/views/LessonInstanceShow/SupportShower';
 
 export type propMethod = () => {
@@ -18,7 +18,7 @@ export default Vue.extend({
     let showCopy = ref(true);
     return {
       lesson: lesson,
-      hasImage: !!lesson.info.image,
+      url: getAsyncRefURL(lesson.info.image),
       showCopy,
       propSupportShower: (): ReturnType<propSupportShower> => ({
         lesson: props.lesson,

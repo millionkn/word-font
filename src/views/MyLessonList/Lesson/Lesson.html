@@ -1,0 +1,32 @@
+<el-card class="root">
+  <div slot="header">{{lesson.info.name}}</div>
+  <div class="body">
+    <div
+      class="left"
+      v-if="image!==''"
+    >
+      <img
+        :src="image"
+        class="image"
+      />
+    </div>
+    <div class="right">
+      <div class="text">{{lesson.info.message||"没有说明"}}</div>
+      <div class="buttons">
+        <span class="tab" />
+        <el-button
+          type="primary"
+          @click="handlerReview(lesson)"
+        >复习</el-button>
+        <el-button
+          type="primary"
+          @click="handlerEdit(lesson)"
+        >编辑</el-button>
+        <el-button
+          type="danger"
+          @click="handlerDelete(lesson)"
+        >删除</el-button>
+      </div>
+    </div>
+  </div>
+</el-card>

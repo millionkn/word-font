@@ -1,22 +1,21 @@
 import Vue from "vue";
-import router from "@/router";
 import { Lesson } from '@/types';
 import { getAsyncRefURL } from '@/service';
 
 export type propMethod = () => {
-  lesson: Lesson
+  lesson: Lesson,
+  handlerReview(lesson: Lesson): void,
+  handlerEdit(lesson: Lesson): void,
+  handlerDelete(lesson: Lesson): void,
 }
 export default Vue.extend({
   props: ["prop"],
-  setup: (initProps) => {
-    let props = (initProps.prop as propMethod)();
+  setup(propsInit) {
+    let props = (propsInit.prop as propMethod)();
     let lesson = props.lesson;
     return {
+      ...props,
       image: getAsyncRefURL(lesson.info.image),
-      info: lesson.info,
-      async onClick() {
-        await router.push(`/lesson/${lesson.id}`);
-      }
     };
-  }
+  },
 });

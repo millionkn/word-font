@@ -18,7 +18,7 @@ export class Lesson {
   info!: {
     name: string,
     message: string,
-    image: string,
+    image?: UploadReturnType,
   }
   constructor(initObj: any) {
     deepAssignWithoutDefinedProperty(this, initObj, {
@@ -28,7 +28,7 @@ export class Lesson {
       info: {
         name: "",
         message: "",
-        image: "",
+        image: { fileCode: 0 },
       }
     })
   }

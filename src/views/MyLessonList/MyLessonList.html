@@ -1,24 +1,23 @@
 <div>
-  <el-button type="success" @click="handlerCreateLesson">创建课程</el-button>
-  <el-card v-for="lesson in lessonList" :key="lesson.id">
-    <div slot="header">{{lesson.info.name}}</div>
-    <div class="root">
-      <div class="left" v-if="lesson.info.image?true:false">
-        <img :src="lesson.info.image" class="image" />
-      </div>
-      <div class="right">
-        <div class="text">{{lesson.info.message||"没有说明"}}</div>
-        <div class="buttons">
-          <span class="tab" />
-          <el-button type="primary" @click="handlerReview(lesson)">复习</el-button>
-          <el-button type="primary" @click="handlerEdit(lesson)">编辑</el-button>
-          <el-button type="danger" @click="handlerDelete(lesson)">删除</el-button>
-        </div>
-      </div>
-    </div>
-  </el-card>
-  <el-dialog title="编辑课程" :visible="true" v-if="updateVisible" @close="updateVisible=false">
+  <el-button
+    type="success"
+    @click="handlerCreateLesson"
+  >创建课程</el-button>
+  <lesson
+    v-for="lesson in lessonList"
+    :prop="propLesson(lesson)"
+    :key="lesson.id"
+  ></lesson>
+  <el-dialog
+    title="编辑课程"
+    :visible="true"
+    v-if="updateVisible"
+    @close="updateVisible=false"
+  >
     <lesson-editor :prop="propLessonEditor"></lesson-editor>
-    <el-button type="primary" @click="syncEditingLesson">更新</el-button>
+    <el-button
+      type="primary"
+      @click="syncEditingLesson"
+    >更新</el-button>
   </el-dialog>
 </div>

@@ -1,9 +1,18 @@
-<el-card :body-style="{padding:'0px',height:'100%'}" class="card">
+<el-card
+  :body-style="{padding:'0px',height:'100%'}"
+  class="card"
+>
   <div slot="header">
     <span>{{info.name}}</span>
   </div>
-  <div class="item" @click="onClick">
-    <img v-if="showImage" :src="info.image" />
+  <div
+    class="item"
+    @click="onClick"
+  >
+    <img
+      v-if="image!==''"
+      :src="image"
+    />
     <div v-else>
       <span>课程没有图片</span>
     </div>
