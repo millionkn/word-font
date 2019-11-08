@@ -1,5 +1,5 @@
 import Vue from "vue";
-import { ref, onUnmounted } from "@vue/composition-api";
+import { ref, onUnmounted, computed } from "@vue/composition-api";
 import router from "@/router";
 
 export default Vue.extend({
@@ -18,8 +18,12 @@ export default Vue.extend({
         }
       ];
     let currentPath = ref("");
-    onUnmounted(router.afterEach((to, from) => (currentPath.value = to.path)));
-    currentPath.value = router.currentRoute.path;
+    let routeChangeHandler = () => {
+      let route = router.currentRoute.matched.find(r => !!r.meta.toolBar);
+      currentPath.value = route ? route.meta.toolBar.path : "";
+    }
+    onUnmounted(router.afterEach(routeChangeHandler));
+    routeChangeHandler();
     return {
       data,
       click(path: string) {

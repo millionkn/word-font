@@ -44,22 +44,39 @@ let router = new Router({
         component: PageContainer,
         children: [
           {
-            path: "lesson/:id",
-            component: () => import("@/views/LessonInstanceShow"),
-            ...asyncProp<propLessonInstanceShow>(async (to, from) => ({
-              lesson: await getLessonById(to.params.id),
-              lessonList: store.getters.currentUser ? store.getters.currentUser.lesson : [],
-            }))
-          },
-          {
             path: "lesson",
-            component: () => import("@/views/LessonList"),
-            ...asyncProp<propLessonList>(async (to, from) => ({
-              lesson: await getLessonList()
-            }))
+            component: Empty,
+            meta: {
+              toolBar: {
+                path: "/lesson"
+              }
+            },
+            children: [
+              {
+                path: ":id",
+                component: () => import("@/views/LessonInstanceShow"),
+                ...asyncProp<propLessonInstanceShow>(async (to, from) => ({
+                  lesson: await getLessonById(to.params.id),
+                  lessonList: store.getters.currentUser ? store.getters.currentUser.lesson : [],
+                }))
+              },
+              {
+                path: "",
+                component: () => import("@/views/LessonList"),
+                ...asyncProp<propLessonList>(async (to, from) => ({
+                  lesson: await getLessonList()
+                }))
+              },
+            ],
           },
+
           {
             path: "/",
+            meta: {
+              toolBar: {
+                path: "/",
+              },
+            },
             component: () => import("@/views/Home"),
           },
           {
