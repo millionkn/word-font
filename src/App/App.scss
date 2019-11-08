@@ -5,3 +5,20 @@ body,
   align-items: stretch;
   flex: 1;
 }
+
+.user-popper {
+  padding: 10 10 10 10;
+
+  .bottom {
+    @include flex-container();
+
+    .left {
+      flex: 1;
+    }
+
+    .right {
+      @include button();
+      flex: 1;
+    }
+  }
+}

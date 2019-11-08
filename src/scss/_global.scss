@@ -12,12 +12,16 @@
   background-color: #fcfaf2;
 }
 
-@mixin clickable {
+@mixin clickable($color) {
   cursor: pointer;
+
+  &:hover {
+    background-color: $color
+  }
 }
 
-@mixin button {
-  @include clickable();
+@mixin button($color:rgb(236, 236, 236)) {
+  @include clickable($color);
   font-weight: 600;
 }
 

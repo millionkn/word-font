@@ -3,6 +3,7 @@
     <el-popover
       placement="top-start"
       trigger="hover"
+      popper-class="user-popper"
     >
       <avatar
         slot="reference"
@@ -10,12 +11,15 @@
         :size="35"
         :rounded="false"
       ></avatar>
-      <div>
-        <el-link @click="logout">退出</el-link>
+      <div class="bottom">
+        <div
+          class="right"
+          @click="logout"
+        >
+          退出
+        </div>
       </div>
     </el-popover>
-
-
   </div>
   <div v-else>
     <el-button-group>
