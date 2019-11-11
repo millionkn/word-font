@@ -1,3 +1,7 @@
+$true:true;
+$false:false;
+$undefined:undefined;
+
 @mixin color-bright {
   background-color: #ffc000;
   color: #2b3648;
@@ -12,11 +16,13 @@
   background-color: #fcfaf2;
 }
 
-@mixin clickable($color) {
+@mixin clickable($color:$undefined) {
   cursor: pointer;
 
-  &:hover {
-    background-color: $color
+  @if($color !=$undefined) {
+    &:hover {
+      background-color: $color
+    }
   }
 }
 
@@ -25,10 +31,15 @@
   font-weight: 600;
 }
 
-@mixin flex-container {
+@mixin flex-container($full:$false) {
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @if $full==$true {
+    height: 100%;
+    width: 100%;
+  }
 
   .item {
     flex: 1;
