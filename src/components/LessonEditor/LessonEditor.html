@@ -1,19 +1,34 @@
-<div>
-  <div class="item">
-    <span class="key">名称</span>
-    <el-input class="value" v-model="lesson.info.name" placeholder="课程名称"></el-input>
+<div class="root">
+  <div class="info">
+    <div class="left">
+      <ImageUploader :prop="propImageUploader"></ImageUploader>
+    </div>
+    <div class="right">
+      <div class="row">
+        <span class="key">名称</span>
+        <el-input
+          class="value"
+          v-model="lesson.info.name"
+          placeholder="课程名称"
+        ></el-input>
+      </div>
+      <div class="row">
+        <span class="key">描述</span>
+        <el-input
+          class="value"
+          v-model="lesson.info.message"
+          placeholder="课程说明"
+        ></el-input>
+      </div>
+      <div class="row">
+        <span class="key">可见性</span>
+        <el-switch
+          v-model="lesson.showing"
+          active-text="公开"
+          inactive-text="私人"
+        ></el-switch>
+      </div>
+    </div>
   </div>
-  <br />
-  <div class="item">
-    <span class="key">描述</span>
-    <el-input class="value" v-model="lesson.info.message" placeholder="课程说明"></el-input>
-  </div>
-  <br />
-  <div class="item">
-    <span class="key">可见性</span>
-    <el-switch v-model="lesson.showing" active-text="公开" inactive-text="私人"></el-switch>
-  </div>
-
-  <br />
   <support-editor :prop="propSupportEditor"></support-editor>
 </div>

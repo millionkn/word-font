@@ -1,5 +1,13 @@
 <div>
-  creteLesson
-  <lesson-editor :prop="propLessonEditor"></lesson-editor>
-  <el-button @click="handleSubmit" type="primary">创建</el-button>
+  <el-card>
+    <div slot="header">
+      创建课程
+    </div>
+    <lesson-editor :prop="propLessonEditor"></lesson-editor>
+    <el-button
+      @click="handleSubmit"
+      type="primary"
+    >创建</el-button>
+  </el-card>
+
 </div>

@@ -1,7 +1,20 @@
-.item {
-  display: flex;
+.root {
+  .info {
+    @include flex-container();
+    align-items: stretch;
+    margin-bottom: 16px;
 
-  .value {
-    flex: 1;
+    .left {
+      width: 120px;
+      @include flex-container();
+      border-width: 2px;
+      border-color: rgba($color: #acacac, $alpha: 0.2);
+      border-style: dashed;
+    }
+
+    .right {
+      flex: 1;
+      @include flex-table(50);
+    }
   }
 }
