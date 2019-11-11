@@ -63,10 +63,12 @@ export async function logout() {
 }
 
 //文件
-export async function upload(file: File, option: typeof axios.post extends (a: any, b: any, c: infer T) => any ? T : never) {
+export async function upload(file: File, option?: typeof axios.post extends (a: any, b: any, c: infer T) => any ? T : never) {
   let formData = new FormData();
   formData.append("file", file);
-  [option] = Object.assign({}, withOutOb(option), { headers: { "Content-Type": "multipart/form-data" } });
+  if (option) {
+    [option] = Object.assign({}, withOutOb(option), { headers: { "Content-Type": "multipart/form-data" } });
+  }
   return (await axios.post("/upload", formData, option)).data as UploadReturnType
 }
 async function getBlob(arg: UploadReturnType) {
