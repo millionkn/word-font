@@ -34,3 +34,27 @@
     flex: 1;
   }
 }
+
+@mixin flex-table($label-width, $margin:8) {
+  .row {
+    &:not(:first-of-type) {
+      margin-top: 16px;
+    }
+
+    display: flex;
+    align-items: center;
+
+    .key {
+      display: inline-block;
+      width: $label-width;
+      text-align: right;
+      margin-right: $margin;
+    }
+
+    .value {
+      display: inline-block;
+      flex: 1;
+      margin-left: $margin;
+    }
+  }
+}
