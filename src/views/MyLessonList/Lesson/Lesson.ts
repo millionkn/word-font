@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { Lesson } from '@/types';
 import { getAsyncRefURL } from '@/service';
+import { watch, ref, computed, onUnmounted } from '@vue/composition-api';
 
 export type propMethod = () => {
   lesson: Lesson,
@@ -12,10 +13,9 @@ export default Vue.extend({
   props: ["prop"],
   setup(propsInit) {
     let props = (propsInit.prop as propMethod)();
-    let lesson = props.lesson;
     return {
       ...props,
-      image: getAsyncRefURL(lesson.info.image),
+      image: getAsyncRefURL(computed(() => props.lesson.info.image), onUnmounted),
     };
   },
 });

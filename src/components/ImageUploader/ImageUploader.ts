@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { upload, getAsyncRefURL } from '@/service';
 import { UploadReturnType } from '@/types';
-import { onMounted, ref } from '@vue/composition-api';
+import { onMounted, ref, onUnmounted, computed } from '@vue/composition-api';
 
 export type propMethod = () => {
   onUploadSuccessed: (arg: UploadReturnType) => void,
@@ -12,7 +12,7 @@ export default Vue.extend({
   setup(propsInit, context) {
     let props = (propsInit.prop as propMethod)();
     let fileInput: HTMLInputElement
-    let imageUrl = getAsyncRefURL(props.defaultImage);
+    let imageUrl = getAsyncRefURL(computed(() => props.defaultImage), onUnmounted);
     onMounted(() => {
       fileInput = context.refs["fileInput"] as HTMLInputElement;
     });

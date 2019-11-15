@@ -1,7 +1,7 @@
 import { UserData, Lesson, Component, UploadReturnType, Word, Support } from "@/types";
 import Axios from 'axios';
 import store from './store';
-import { ref } from '@vue/composition-api';
+import { ref, Ref, watch } from '@vue/composition-api';
 //@vue/composition-api的bug，Object.keys(被监听的对象)有"__ob__"
 
 const withOutOb = (() => {
@@ -84,9 +84,11 @@ export function getComponentFile(componentId: string) {
     reader.readAsText(blob);
   })
 }
-export function getAsyncRefURL(arg: UploadReturnType | undefined) {
+export function getAsyncRefURL(arg: Ref<UploadReturnType | undefined>, regUnwatch: (arg: ReturnType<typeof watch>) => void) {
   let ret = ref("");
-  if (arg) { (async () => ret.value = URL.createObjectURL(await getBlob(arg)))() }
+  regUnwatch(watch(() => arg.value, async (n) => {
+    ret.value = n ? URL.createObjectURL(await getBlob(n)) : "";
+  }));
   return ret;
 }
 //lesson
