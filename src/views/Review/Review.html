@@ -1,5 +1,10 @@
-<div ref="customn_target" style="display:flex;border:4px">
-  <keep-alive>
-    <component :is="currentComponent" :word="currentWord.data" @result="getResult"></component>
-  </keep-alive>
+<div
+  ref="customn_target"
+  style="display:flex;border:4px"
+>
+  <component
+    :is="currentComponent"
+    :word="currentWord.data"
+    @result="getResult"
+  ></component>
 </div>

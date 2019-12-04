@@ -20,6 +20,7 @@ async function initScript(componentId: string) {
   let script = await getComponentFile(componentId);
   return await new Promise<vueOption>(res =>
     vm({
+      window, Math,
       Axios: Axios.create(),
       VueSetup: <O extends vueOption>(vueOption: O) => res(vueOption)
     })(script)

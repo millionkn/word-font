@@ -13,5 +13,19 @@
     margin: 20px;
     flex: 1;
     cursor: pointer;
+
+    .center {
+      @include flex-container($false);
+      text-align: center;
+      flex-direction: column;
+      height: 160px;
+    }
+
+    .component {
+      .title {
+        font-size: 32px;
+        color: rgb(72, 188, 255);
+      }
+    }
   }
 }

@@ -1,12 +1,25 @@
 <el-tabs type="border-card">
-  <el-tab-pane v-for="obj in data" :key="obj.component.id">
+  <el-tab-pane
+    v-for="obj in data"
+    :key="obj.component.id"
+  >
     <template v-slot:label>
       <span>{{obj.component.info.name}}</span>
     </template>
-    <el-table :data="obj.words" height="100%" :default-sort="{prop:'describe'}" row-key="id">
+    <el-table
+      :data="obj.words"
+      height="100%"
+      :default-sort="{prop:'describe'}"
+      row-key="id"
+    >
       <el-table-column>
         <template #default="scope">
-          {{scope.row}}
+          {{scope.row.data.chinese}}
+        </template>
+      </el-table-column>
+      <el-table-column>
+        <template #default="scope">
+          {{scope.row.data.english}}
         </template>
       </el-table-column>
     </el-table>

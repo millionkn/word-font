@@ -1,1 +1,33 @@
-<div>一个欢迎页面</div>
+<el-card>
+  <div
+    slot="header"
+    class="header"
+  >
+    <span>操作指引</span>
+  </div>
+  <p class="step">
+    <a>首先进行需要登录</a>
+    <br />
+    <img :src="images._1" />
+  </p>
+  <p class="step">
+    <a>选择一个课程</a>
+    <br />
+    <img :src="images._2" />
+  </p>
+  <p class="step">
+    <a>点击“复制到课表”</a>
+    <br />
+    <img :src="images._3" />
+  </p>
+  <p class="step">
+    <a>切换到主页，点击课程</a>
+    <br />
+    <img :src="images._4" />
+  </p>
+  <p class="step">
+    <a>进行复习</a>
+    <br />
+    <img :src="images._5" />
+  </p>
+</el-card>
