@@ -4,6 +4,7 @@ import { onMounted, ref } from "@vue/composition-api";
 import { Lesson, Word, Support } from "@/types";
 import { getLessonContent, getWordCollection, getComponentFile } from '@/service';
 import Axios from 'axios';
+import { Message } from 'element-ui';
 
 type vueOption = typeof Vue.extend extends (opt: infer O) => any ? O : false;
 type vueConstroctor = ReturnType<typeof Vue.extend>;
@@ -60,7 +61,11 @@ export default Vue.extend({
     });
     return {
       getResult: (result: boolean) => {
-        alert(result);
+        if (result) {
+          Message.success("答案正确")
+        } else {
+          Message.error("答案错误")
+        }
         switchWord();
       },
       switchWord,
